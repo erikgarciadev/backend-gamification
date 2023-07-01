@@ -76,7 +76,7 @@ export class StudentsService {
         fieldsUser,
       )
       .skip(skip)
-      .limit(10);
+      .limit(100);
 
     return users;
   }
