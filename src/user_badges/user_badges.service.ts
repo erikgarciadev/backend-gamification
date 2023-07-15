@@ -35,16 +35,27 @@ export class UserBadgesService {
       user_id,
     });
 
+    //filter
+
+    let ids = {};
+
     const data = [];
     for (const userBadge of userBadges) {
-      const badge = await this.badgeModel.findOne({
-        id: userBadge._id,
-      });
+      if (!ids[userBadge.badge_id]) {
+        ids = {
+          [userBadge.badge_id]: 1,
+          ...ids,
+        };
 
-      data.push({
-        badge,
-        ...userBadge,
-      });
+        const badge = await this.badgeModel.findOne({
+          _id: userBadge.badge_id,
+        });
+
+        data.push({
+          badge,
+          ...userBadge,
+        });
+      }
     }
 
     return data;

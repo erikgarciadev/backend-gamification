@@ -235,13 +235,25 @@ export class UserCalificationsService {
     let badge_id = null;
 
     if (badges.length > userBadges.length) {
-      const userBadgesIds = userBadges.map((data) => data._id);
+      const userBadgesIds = userBadges.map((data) => data.badge_id);
+      let object = {};
+      for (const userBadgesId of userBadgesIds) {
+        object = {
+          [userBadgesId]: 1,
+          ...object,
+        };
+      }
       for (const badge of badges) {
-        if (!userBadgesIds.includes(badge._id)) {
+        if (!object[badge._id]) {
           badge_id = badge._id;
           win_badge = true;
           break;
         }
+        // if (!userBadgesIds.includes(badge._id)) {
+        //   badge_id = badge._id;
+        //   win_badge = true;
+        //   break;
+        // }
       }
     }
 
